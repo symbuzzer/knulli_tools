@@ -33,7 +33,7 @@ def clear_overlay():
     subprocess.run(['batocera-es-swissknife', '--remount'], check=True)
     show_message("Overlay cleared successfully!")
     show_message("Rebooting...")
-    os.system("batocera-es-swissknife --reboot")
+    subprocess.run(['reboot'])
 
 
 def main():
