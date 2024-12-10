@@ -28,7 +28,7 @@ def delete_etk():
         show_message("ETK deleted successfully!")
         save_overlay()
     except Exception as e:
-        show_message(f"Error: {str(e)}")
+        show_message("Error: ETK not installed in systemspace!")
 
 def save_overlay():
     show_message("Saving overlay...")
