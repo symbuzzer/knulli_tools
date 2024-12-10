@@ -1,5 +1,5 @@
 # Some useful scripts for Knulli 
-## TOOLS
+## Tools
 - **tool_CLEAR_OVERLAY**: Restores the batocera-overlay state if it was created
 - **tool_DELETE_ETK**: Deletes es-theme-knulli if it is pre-installed and saves batocera-overlay
 - **tool_SAVE_OVERLAY**: Saves changes on overlay (temp-RW file system)
