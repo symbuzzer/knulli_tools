@@ -1,0 +1,40 @@
+import os
+import pygame
+import subprocess
+
+scriptVersion = "1.0.0"
+scriptName = "RW_BOOT"
+
+file_path = "/boot/boot/autoresize"
+
+pygame.init()
+
+font = pygame.font.Font(None, 36)
+message_font = pygame.font.Font(None, 36)
+screen = pygame.display.set_mode((640, 480))
+
+def show_message(message):
+    screen.fill((0, 0, 0))
+    text_surface = message_font.render(message, True, (255, 255, 255))
+    text_rect = text_surface.get_rect(center=(screen.get_width() // 2, screen.get_height() // 2))
+    screen.blit(text_surface, text_rect.topleft)
+    pygame.display.flip()
+    pygame.time.wait(2000)
+
+def makerw_boot():
+    show_message("Checking BOOT status...")
+    subprocess.run(['batocera-es-swissknife', '--remount'], check=True)
+    file_path = "/boot/boot/autoresize"
+    if os.access(file_path, os.W_OK):
+        show_message("BOOT remounted RW")
+    else:
+        show_message("BOOT remounted RO")
+
+
+def main():
+    makerw_boot()
+    pygame.quit()
+
+if __name__ == "__main__":
+    show_message(f"Starting {scriptName} v{scriptVersion} by Ali BEYAZ...")
+    main()
