@@ -2,7 +2,7 @@ import os
 import pygame
 
 scriptVersion = "1.0.0"
-scriptName = "SAVEOVERLAY"
+scriptName = "SAVE_OVERLAY"
 
 pygame.init()
 
