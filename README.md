@@ -7,7 +7,7 @@
 - **tool_SAVE_OVERLAY**: Saves changes on overlay (temp-RW file system)
 - **tool_UNINSTALL_ETK**: Removes es-theme-knulli if it was installed in userspace by the user
 - **tool_RW_BOOT**: Makes the read-only Boot partition writable or read-only
-- **[etk_tool](https://github.com/symbuzzer/etk_tool/releases/latest/download/etk_tool.pygame)**: Downloads and updates es-theme-knulli both installed systemspace (pres-installed) and userspace
+- **[etk_tool](https://github.com/symbuzzer/etk_tool/releases/latest/download/etk_tool.pygame)**: Downloads and updates es-theme-knulli both installed systemspace (pre-installed) and userspace
 
 ## How to install and use?
 - Download [KNULLI_TOOLS-MAIN.ZIP](https://github.com/symbuzzer/knulli_tools/archive/refs/heads/main.zip) and extract *.PYGAME files from it
