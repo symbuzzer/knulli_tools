@@ -1,0 +1,45 @@
+import os
+import pygame
+import shutil
+import subprocess
+
+scriptVersion = "1.0.0"
+scriptName = "CLEAR_OVERLAY"
+
+overlay_path = "/boot/boot/overlay"
+
+pygame.init()
+
+font = pygame.font.Font(None, 36)
+message_font = pygame.font.Font(None, 36)
+screen = pygame.display.set_mode((640, 480))
+
+def show_message(message):
+    screen.fill((0, 0, 0))
+    text_surface = message_font.render(message, True, (255, 255, 255))
+    text_rect = text_surface.get_rect(center=(screen.get_width() // 2, screen.get_height() // 2))
+    screen.blit(text_surface, text_rect.topleft)
+    pygame.display.flip()
+    pygame.time.wait(2000)
+
+def clear_overlay():
+    if not os.path.exists(overlay_path):
+        show_message("Error: No saved overlay found!")
+        return
+    
+    show_message("Clearing overlay...")
+    subprocess.run(['bash', '-c', '[[ ! -w /boot/boot/autoresize ]] && batocera-es-swissknife --remount'])
+    os.remove(overlay_path)
+    subprocess.run(['batocera-es-swissknife', '--remount'], check=True)
+    show_message("Overlay cleared successfully!")
+    show_message("Rebooting...")
+    os.system("batocera-es-swissknife --reboot")
+
+
+def main():
+    clear_overlay()
+    pygame.quit()
+
+if __name__ == "__main__":
+    show_message(f"Starting {scriptName} v{scriptVersion} by Ali BEYAZ...")
+    main()
