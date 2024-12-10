@@ -1,7 +1,5 @@
 import os
 import pygame
-import shutil
-import subprocess
 
 scriptVersion = "1.0.0"
 scriptName = "CHECK_OVERLAY"
