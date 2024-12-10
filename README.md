@@ -8,7 +8,7 @@
 - **[etk_tool](https://github.com/symbuzzer/etk_tool/releases/latest/download/etk_tool.pygame)**: Downloads and updates es-theme-knulli both installed systemspace (pres-installed) and userspace
 
 ## How to install and use?
-- Download [MAIN.ZIP](https://github.com/symbuzzer/knulli_tools/archive/refs/heads/main.zip) and extract *.PYGAME files from it
+- Download [KNULLI_TOOLS-MAIN.ZIP](https://github.com/symbuzzer/knulli_tools/archive/refs/heads/main.zip) and extract *.PYGAME files from it
 - Copy them to ROMS/PYGAME folder as a game rom
 - From Knulli, refresh gamelist and check PYGAME collection
 - for ETK_TOOL, please look its [github repo](https://github.com/symbuzzer/etk_tool)
