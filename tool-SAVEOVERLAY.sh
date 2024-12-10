@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version="1.0.0"
+version="1.0.1"
 
 script_dir="$(dirname "$(realpath "$0")")"
 tool_dir="$script_dir/knulli_tools"
