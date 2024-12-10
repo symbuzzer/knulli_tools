@@ -6,6 +6,7 @@ script_dir="$(dirname "$(realpath "$0")")"
 tool_dir="$script_dir/knulli_tools"
 
 mkdir -p "$tool_dir"
+chmod -R u+w "$tool_dir"
 
 curl -L https://raw.githubusercontent.com/symbuzzer/knulli_tools/refs/heads/main/tool_SAVEOVERLAY.sh -o "$script_dir/tool_SAVEOVERLAY.sh"
 curl -L https://raw.githubusercontent.com/symbuzzer/knulli_tools/refs/heads/main/pythonscripts/tool_SAVEOVERLAY.pygame -o "$tool_dir/tool_SAVEOVERLAY.pygame"
