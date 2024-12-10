@@ -5,7 +5,7 @@ import shutil
 scriptVersion = "1.0.0"
 scriptName = "DELETE_ETK"
 
-theme_path = "/usr/share/emulationstation/themes/es-theme-knulli/"
+theme_path = "/usr/share/emulationstation/themes/es-theme-knulli"
 
 pygame.init()
 
@@ -24,15 +24,11 @@ def show_message(message):
 def delete_etk():
     show_message("Deleting ETK...")  
     try:
-        result = shutil.rmtree(theme_path)
-        if result == 0:
-            show_message("ETK deleted succesfully!")
-            save_overlay()
-        else:
-            show_message("Error: ETK not deleted!")
+        shutil.rmtree(theme_path)
+        show_message("ETK deleted successfully!")
+        save_overlay()
     except Exception as e:
         show_message(f"Error: {str(e)}")
-
 
 def save_overlay():
     show_message("Saving overlay...")
