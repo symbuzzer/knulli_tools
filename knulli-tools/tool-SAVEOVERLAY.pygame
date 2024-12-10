@@ -1,0 +1,9 @@
+import os
+import pygame
+
+show_message("Saving overlay...")
+result = os.system("sh /usr/bin/batocera-save-overlay")
+if result == 0:
+    show_message("Overlay saved succesfully!")
+else:
+    show_message("Error: Overlay not saved!")
