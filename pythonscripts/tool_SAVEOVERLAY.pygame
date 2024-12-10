@@ -1,5 +1,6 @@
 import os
 import pygame
+import re
 
 scriptVersion = "1.0.0"
 scriptName = "SAVEOVERLAY"
