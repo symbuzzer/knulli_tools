@@ -18,9 +18,9 @@ jobs:
 
       - name: Copy Submodule Contents
         run: |
-          rm -rf etk_tool # Var olan etk_tool klasörünü temizle
+          rm -rf etk_tool || true 
           cp -r etk_tool/. ./etk_tool_temp
-          rm -rf etk_tool/.git
+          rm -rf etk_tool/.git || true 
           mv ./etk_tool_temp ./etk_tool
 
       - name: Commit Changes
