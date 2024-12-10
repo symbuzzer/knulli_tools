@@ -2,6 +2,7 @@ import os
 import pygame
 
 scriptVersion = "1.0.0"
+scriptName = "SAVEOVERLAY"
 
 pygame.init()
 
@@ -40,4 +41,5 @@ def main():
     pygame.quit()
 
 if __name__ == "__main__":
+    show_message(f"Starting {scriptName} v{scriptVersion} by Ali BEYAZ...")
     main()
