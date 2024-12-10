@@ -7,7 +7,7 @@ tool_dir="$script_dir/knulli-tools"
 
 mkdir -p "$tool_dir"
 
-curl -L https://raw.githubusercontent.com/symbuzzer/knullitools/refs/heads/main/tool-SAVEOVERLAY.sh -o "$script_dir/tool-SAVEOVERLAY.sh"
+curl -L https://raw.githubusercontent.com/symbuzzer/knulli-tools/refs/heads/main/tool-SAVEOVERLAY.sh -o "$script_dir/tool-SAVEOVERLAY.sh"
 
 if [ ! -f "$tool_dir/tool-SAVEOVERLAY.pygame" ]; then
     curl -L https://raw.githubusercontent.com/symbuzzer/etk_tool/refs/heads/main/knulli-tools/tool-SAVEOVERLAY.pygame -o "$tool_dir/tool-SAVEOVERLAY.pygame"
