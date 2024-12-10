@@ -1,6 +1,7 @@
-name: Update Submodules
+name: Update and Commit Submodule Contents
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -8,11 +9,24 @@ on:
 jobs:
   update-submodules:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
           submodules: true
 
-      - name: Verify Submodules
-        run: git submodule update --init --recursive
+      - name: Copy Submodule Contents
+        run: |
+          rm -rf etk_tool # Var olan etk_tool klasörünü temizle
+          cp -r etk_tool/. ./etk_tool_temp
+          rm -rf etk_tool/.git
+          mv ./etk_tool_temp ./etk_tool
+
+      - name: Commit Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add etk_tool
+          git commit -m "Updated etk_tool submodule contents" || echo "No changes to commit"
+          git push origin main
