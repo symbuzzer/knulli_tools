@@ -17,14 +17,24 @@ def show_message(message):
 
 def save_overlay():
     show_message("Saving overlay...")
-    result = os.system("sh /usr/bin/batocera-save-overlay")
-    if result == 0:
-        show_message("Overlay saved succesfully!")
-    else:
-        show_message("Error: Overlay not saved!")
+    try:
+        result = os.system("sh /usr/bin/batocera-save-overlay")
+        if result == 0:
+            show_message("Overlay saved succesfully!")
+        else:
+            show_message("Error: Overlay not saved!")
+    except Exception as e:
+        show_message(f"Error: {str(e)}")
 
 def main():
-    save_overlay()
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        save_overlay()
+        running = False
+
     pygame.quit()
 
 if __name__ == "__main__":
