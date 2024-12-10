@@ -1,0 +1,38 @@
+import os
+import pygame
+
+scriptVersion = "1.0.0"
+scriptName = "SAVEOVERLAY"
+
+pygame.init()
+
+font = pygame.font.Font(None, 36)
+message_font = pygame.font.Font(None, 36)
+screen = pygame.display.set_mode((640, 480))
+
+def show_message(message):
+    screen.fill((0, 0, 0))
+    text_surface = message_font.render(message, True, (255, 255, 255))
+    text_rect = text_surface.get_rect(center=(screen.get_width() // 2, screen.get_height() // 2))
+    screen.blit(text_surface, text_rect.topleft)
+    pygame.display.flip()
+    pygame.time.wait(2000)
+
+def save_overlay():
+    show_message("Saving overlay...")
+    try:
+        result = os.system("sh /usr/bin/batocera-save-overlay")
+        if result == 0:
+            show_message("Overlay saved succesfully!")
+        else:
+            show_message("Error: Overlay not saved!")
+    except Exception as e:
+        show_message(f"Error: {str(e)}")
+
+def main():
+    save_overlay()
+    pygame.quit()
+
+if __name__ == "__main__":
+    show_message(f"Starting {scriptName} v{scriptVersion} by Ali BEYAZ...")
+    main()
