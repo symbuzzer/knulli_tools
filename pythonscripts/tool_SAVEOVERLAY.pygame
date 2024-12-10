@@ -1,6 +1,8 @@
 import os
 import pygame
 
+scriptVersion = "1.0.0"
+
 pygame.init()
 
 font = pygame.font.Font(None, 36)
