@@ -1,0 +1,65 @@
+import os
+import pygame
+import zipfile
+import requests
+
+scriptVersion = "1.0.0"
+scriptName = "UPDATE_SCRIPTS"
+
+script_directory = os.path.dirname(os.path.abspath(__file__))
+zip_url = "https://github.com/symbuzzer/knulli_tools/archive/refs/heads/main.zip"
+zip_path = os.path.join(script_directory, "main.zip")
+
+pygame.init()
+
+font = pygame.font.Font(None, 36)
+message_font = pygame.font.Font(None, 36)
+screen = pygame.display.set_mode((640, 480))
+
+def show_message(message):
+    screen.fill((0, 0, 0))
+    text_surface = message_font.render(message, True, (255, 255, 255))
+    text_rect = text_surface.get_rect(center=(screen.get_width() // 2, screen.get_height() // 2))
+    screen.blit(text_surface, text_rect.topleft)
+    pygame.display.flip()
+    pygame.time.wait(2000)
+
+def update_scripts():
+    show_message("Downloading from GitHub...")
+    
+    try:
+        response = requests.get(zip_url, stream=True)
+        if response.status_code == 200:
+            with open(zip_path, "wb") as file:
+                for chunk in response.iter_content(chunk_size=100 * 1024 * 1024):
+                    file.write(chunk)
+            show_message("Download completed!")
+        else:
+            show_message(f"Failed to download: {response.status_code}")
+            return
+        
+        show_message("Extracting scripts...")
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            for file_info in zip_ref.infolist():
+                if file_info.filename.startswith("knulli_tools-main/") and file_info.filename.endswith(".pygame"):
+                    extracted_path = os.path.join(script_directory, os.path.basename(file_info.filename))
+                    with open(extracted_path, "wb") as extracted_file:
+                        extracted_file.write(zip_ref.read(file_info))
+        show_message("Extraction completed!")
+        
+        show_message("Cleaning temp files...")
+        os.remove(zip_path)
+        show_message("Cleanup completed.")
+    
+    except Exception as e:
+        show_message(f"Error: {str(e)}")  
+
+
+def main():
+    update_scripts()
+    show_message("Exiting...")
+    pygame.quit()
+
+if __name__ == "__main__":
+    show_message(f"Starting {scriptName} v{scriptVersion} by Ali BEYAZ...")
+    main()
