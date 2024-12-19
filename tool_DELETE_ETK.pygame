@@ -2,7 +2,7 @@ import os
 import pygame
 import shutil
 
-scriptVersion = "1.0.0"
+scriptVersion = "1.0.1"
 scriptName = "DELETE_ETK"
 
 theme_path = "/usr/share/emulationstation/themes/es-theme-knulli"
@@ -43,6 +43,7 @@ def save_overlay():
 
 def main():
     delete_etk()
+    show_message("Exiting...")
     pygame.quit()
 
 if __name__ == "__main__":
