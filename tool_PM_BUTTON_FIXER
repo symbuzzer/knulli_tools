@@ -1,0 +1,66 @@
+import os
+import pygame
+
+scriptVersion = "1.0.0"
+scriptName = "PM_BUTTON_FIXER"
+
+pygame.init()
+
+font = pygame.font.Font(None, 36)
+message_font = pygame.font.Font(None, 36)
+screen = pygame.display.set_mode((640, 480))
+
+def show_message(message):
+    screen.fill((0, 0, 0))
+    text_surface = message_font.render(message, True, (255, 255, 255))
+    text_rect = text_surface.get_rect(center=(screen.get_width() // 2, screen.get_height() // 2))
+    screen.blit(text_surface, text_rect.topleft)
+    pygame.display.flip()
+    pygame.time.wait(2000)
+
+def save_overlay():
+    show_message("Saving overlay...")
+    try:
+        result = os.system("sh /usr/bin/batocera-save-overlay")
+        if result == 0:
+            show_message("Overlay saved successfully!")
+        else:
+            show_message("Error: Overlay not saved!")
+    except Exception as e:
+        show_message(f"Error: {str(e)}")
+
+def fix_buttons():
+    show_message("Checking...")
+    file_path = "/usr/lib/python3.11/site-packages/configgen/controller.py"
+    old_code = """\"\"\"Default mapping of Batocera keys to SDL_GAMECONTROLLERCONFIG keys.\"\"\"\n_DEFAULT_SDL_MAPPING: Final = {\n    'b': 'a',\n    'a': 'b',\n    'x': 'y',\n    'y': 'x',"""
+    new_code = """\"\"\"Default mapping of Batocera keys to SDL_GAMECONTROLLERCONFIG keys.\"\"\"\n_DEFAULT_SDL_MAPPING: Final = {\n    'b': 'b',\n    'a': 'a',\n    'x': 'x',\n    'y': 'y',"""
+
+    try:
+        if os.path.exists(file_path):
+            with open(file_path, "r") as file:
+                content = file.read()
+                if old_code in content:
+                    show_message("Applying patch...")
+                    updated_content = content.replace(old_code, new_code)
+                    with open(file_path, "w") as file:
+                        file.write(updated_content)
+                    show_message("Patch applied successfully!")
+                    save_overlay()
+                else:
+                    show_message("Nothing to patch, Exiting...")
+                    pygame.quit()
+        else:
+            show_message("File not found! Exiting...")
+            pygame.quit()
+            exit()
+    except Exception as e:
+        show_message(f"Error: {str(e)}")
+        pygame.quit()
+
+def main():
+    fix_buttons()
+    pygame.quit()
+
+if __name__ == "__main__":
+    show_message(f"Starting {scriptName} v{scriptVersion} by Ali BEYAZ...")
+    main()
