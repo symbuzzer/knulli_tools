@@ -5,10 +5,11 @@
 - **tool_CLEAR_OVERLAY**: Restores the batocera-overlay state if it was created
 - **tool_DELETE_ETK**: Deletes es-theme-knulli if it is pre-installed and saves batocera-overlay
 - **tool_PM_BUTTON_FIXER**: Fixes PortMaster button layout
+- **tool_REVERT_PM_BUTTON**: Reverts PortMaster button layout
+- **tool_RW_BOOT**: Makes the read-only Boot partition writable or read-only
 - **tool_SAVE_OVERLAY**: Saves changes on overlay (temp-RW file system)
 - **tool_UNINSTALL_ETK**: Removes es-theme-knulli if it was installed in userspace by the user
 - **tool_UPDATE_SCRIPTS**: Downloads and updates all scripts on there
-- **tool_RW_BOOT**: Makes the read-only Boot partition writable or read-only
 - **[etk_tool](https://github.com/symbuzzer/etk_tool/releases/latest/download/etk_tool.pygame)**: Downloads and updates es-theme-knulli both installed systemspace (pre-installed) and userspace
 
 ## How to install and use?
