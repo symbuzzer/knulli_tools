@@ -1,7 +1,8 @@
 import os
+import sys
 import pygame
 
-scriptVersion = "1.0.0"
+scriptVersion = "1.1.0"
 scriptName = "REVERT_PM_BUTTON"
 
 pygame.init()
@@ -31,10 +32,19 @@ def save_overlay():
 
 def fix_buttons():
     show_message("Checking...")
-    file_path = "/usr/lib/python3.11/site-packages/configgen/controller.py"
-    old_code = """\"\"\"Default mapping of Batocera keys to SDL_GAMECONTROLLERCONFIG keys.\"\"\"\n_DEFAULT_SDL_MAPPING: Final = {\n    'b': 'b',\n    'a': 'a',\n    'x': 'x',\n    'y': 'y',"""
-    new_code = """\"\"\"Default mapping of Batocera keys to SDL_GAMECONTROLLERCONFIG keys.\"\"\"\n_DEFAULT_SDL_MAPPING: Final = {\n    'b': 'a',\n    'a': 'b',\n    'x': 'y',\n    'y': 'x',"""
-
+    file_path = f"/usr/lib/python{sys.version_info.major}.{sys.version_info.minor}/site-packages/configgen/controller.py"
+    old_code = """""Default mapping of Batocera keys to SDL_GAMECONTROLLERCONFIG keys."""
+_DEFAULT_SDL_MAPPING: Final = {
+    'b': 'b',
+    'a': 'a',
+    'x': 'x',
+    'y': 'y',"""
+    new_code = """""Default mapping of Batocera keys to SDL_GAMECONTROLLERCONFIG keys."""
+_DEFAULT_SDL_MAPPING: Final = {
+    'b': 'a',
+    'a': 'b',
+    'x': 'y',
+    'y': 'x',"""
     try:
         if os.path.exists(file_path):
             with open(file_path, "r") as file:
