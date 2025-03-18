@@ -1,8 +1,7 @@
 import os
-import sys
 import pygame
 
-scriptVersion = "1.1.0"
+scriptVersion = "1.1.1"
 scriptName = "REVERT_PM_BUTTON"
 
 pygame.init()
@@ -30,39 +29,40 @@ def save_overlay():
     except Exception as e:
         show_message(f"Error: {str(e)}")
 
+def find_controller_file():
+    base_path = "/usr/lib"
+    python_versions = sorted([d for d in os.listdir(base_path) if d.startswith("python3.")], reverse=True)
+    for version in python_versions:
+        file_path = os.path.join(base_path, version, "site-packages/configgen/controller.py")
+        if os.path.exists(file_path):
+            return file_path
+    return None
+
 def fix_buttons():
     show_message("Checking...")
-    file_path = f"/usr/lib/python{sys.version_info.major}.{sys.version_info.minor}/site-packages/configgen/controller.py"
-    old_code = """""Default mapping of Batocera keys to SDL_GAMECONTROLLERCONFIG keys."""
-_DEFAULT_SDL_MAPPING: Final = {
-    'b': 'b',
-    'a': 'a',
-    'x': 'x',
-    'y': 'y',"""
-    new_code = """""Default mapping of Batocera keys to SDL_GAMECONTROLLERCONFIG keys."""
-_DEFAULT_SDL_MAPPING: Final = {
-    'b': 'a',
-    'a': 'b',
-    'x': 'y',
-    'y': 'x',"""
+    file_path = find_controller_file()
+
+    if not file_path:
+        show_message("Controller file not found! Exiting...")
+        pygame.quit()
+        exit()
+
+    old_code = """\"\"\"Default mapping of Batocera keys to SDL_GAMECONTROLLERCONFIG keys.\"\"\"\n_DEFAULT_SDL_MAPPING: Final = {\n    'b': 'b',\n    'a': 'a',\n    'x': 'x',\n    'y': 'y',"""
+    new_code = """\"\"\"Default mapping of Batocera keys to SDL_GAMECONTROLLERCONFIG keys.\"\"\"\n_DEFAULT_SDL_MAPPING: Final = {\n    'b': 'a',\n    'a': 'b',\n    'x': 'y',\n    'y': 'x',"""
+
     try:
-        if os.path.exists(file_path):
-            with open(file_path, "r") as file:
-                content = file.read()
-                if old_code in content:
-                    show_message("Applying patch...")
-                    updated_content = content.replace(old_code, new_code)
-                    with open(file_path, "w") as file:
-                        file.write(updated_content)
-                    show_message("Reverted successfully!")
-                    save_overlay()
-                else:
-                    show_message("Nothing to revert, Exiting...")
-                    pygame.quit()
-        else:
-            show_message("File not found! Exiting...")
-            pygame.quit()
-            exit()
+        with open(file_path, "r") as file:
+            content = file.read()
+            if old_code in content:
+                show_message("Applying patch...")
+                updated_content = content.replace(old_code, new_code)
+                with open(file_path, "w") as file:
+                    file.write(updated_content)
+                show_message("Reverted successfully!")
+                save_overlay()
+            else:
+                show_message("Nothing to revert, Exiting...")
+                pygame.quit()
     except Exception as e:
         show_message(f"Error: {str(e)}")
         pygame.quit()
