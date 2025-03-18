@@ -3,7 +3,7 @@ import pygame
 import zipfile
 import requests
 
-scriptVersion = "1.0.1"
+scriptVersion = "1.0.2"
 scriptName = "UPDATE_SCRIPTS"
 
 script_directory = os.path.dirname(os.path.abspath(__file__))
@@ -49,7 +49,7 @@ def update_scripts():
         
         show_message("Cleaning temp files...")
         os.remove(zip_path)
-        show_message("Cleanup completed.")
+        show_message("Cleanup completed!")
     
     except Exception as e:
         show_message(f"Error: {str(e)}")  
