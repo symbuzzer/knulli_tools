@@ -1,7 +1,7 @@
 import os
 import pygame
 
-scriptVersion = "1.0.0"
+scriptVersion = "1.0.1"
 scriptName = "M3U_PSX"
 
 pygame.init()
@@ -22,7 +22,6 @@ def create_M3U():
     pygame_dir = os.path.dirname(os.path.abspath(__file__))
     base_dir = os.path.dirname(pygame_dir)
     psx_dir = os.path.join(base_dir, "psx")
-    output_dir = pygame_dir
     
     if not os.path.exists(psx_dir):
         show_message("PSX directory not found!")
@@ -37,8 +36,12 @@ def create_M3U():
             grouped_files[base_name] = []
         grouped_files[base_name].append(file)
     
+    if not grouped_files:
+        show_message("No matching files found!")
+        return
+    
     for base_name, file_list in grouped_files.items():
-        m3u_path = os.path.join(output_dir, f"{base_name}.m3u")
+        m3u_path = os.path.join(psx_dir, f"{base_name}.m3u")
         with open(m3u_path, "w") as m3u_file:
             for file in sorted(file_list):
                 m3u_file.write(file + "\n")
