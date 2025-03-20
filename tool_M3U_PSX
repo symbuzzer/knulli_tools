@@ -1,0 +1,55 @@
+import os
+import pygame
+
+scriptVersion = "1.0.0"
+scriptName = "M3U_PSX"
+
+pygame.init()
+
+font = pygame.font.Font(None, 36)
+message_font = pygame.font.Font(None, 36)
+screen = pygame.display.set_mode((640, 480))
+
+def show_message(message):
+    screen.fill((0, 0, 0))
+    text_surface = message_font.render(message, True, (255, 255, 255))
+    text_rect = text_surface.get_rect(center=(screen.get_width() // 2, screen.get_height() // 2))
+    screen.blit(text_surface, text_rect.topleft)
+    pygame.display.flip()
+    pygame.time.wait(2000)
+
+def create_M3U():
+    pygame_dir = os.path.dirname(os.path.abspath(__file__))
+    base_dir = os.path.dirname(pygame_dir)
+    psx_dir = os.path.join(base_dir, "psx")
+    output_dir = pygame_dir
+    
+    if not os.path.exists(psx_dir):
+        show_message("PSX directory not found!")
+        return
+    
+    files = [f for f in os.listdir(psx_dir) if os.path.isfile(os.path.join(psx_dir, f))]
+    grouped_files = {}
+    
+    for file in files:
+        base_name = file.rsplit(" (", 1)[0]
+        if base_name not in grouped_files:
+            grouped_files[base_name] = []
+        grouped_files[base_name].append(file)
+    
+    for base_name, file_list in grouped_files.items():
+        m3u_path = os.path.join(output_dir, f"{base_name}.m3u")
+        with open(m3u_path, "w") as m3u_file:
+            for file in sorted(file_list):
+                m3u_file.write(file + "\n")
+    
+        show_message(f"{base_name}.m3u created!")
+
+def main():
+    create_M3U()
+    show_message("Exiting...")
+    pygame.quit()
+
+if __name__ == "__main__":
+    show_message(f"Starting {scriptName} v{scriptVersion} by Ali BEYAZ...")
+    main()
