@@ -2,7 +2,7 @@ import os
 import pygame
 import re  
 
-scriptVersion = "1.1.0"
+scriptVersion = "1.1.1"
 scriptName = "M3U_PSX"
 
 pygame.init()
@@ -44,7 +44,7 @@ def create_M3U():
         for file in files:
             file_path = os.path.join(root, file)
 
-            if not file.lower().endswith((".bin", ".cue", ".img", ".iso", ".chd", ".pbp")):
+            if not file.lower().endswith((".cue", ".img", ".iso", ".chd")):
                 continue  
 
             base_name = DISK_REGEX.sub("", file).strip()
