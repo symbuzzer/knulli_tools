@@ -5,8 +5,8 @@
 - **tool_CLEAR_OVERLAY**: Restores the batocera-overlay state if it was created
 - **tool_DELETE_ETK**: Deletes es-theme-knulli if it is pre-installed and saves batocera-overlay
 - **tool_M3U_PSX**: Create M3U playlist file from roms/psx folder
-- **tool_PM_BUTTON_FIXER**: Fixes PortMaster button layout
-- **tool_REVERT_PM_BUTTON**: Reverts PortMaster button layout
+- **tool_PM_BUTTON_FIXER**: Fixes PortMaster button layout. No need for this from 22/0382025 anymore. PM Team fixed this.
+- **tool_REVERT_PM_BUTTON**: Reverts PortMaster button layout. No need for this from 22/0382025 anymore. PM Team fixed this.
 - **tool_RW_BOOT**: Makes the read-only Boot partition writable or read-only
 - **tool_SAVE_OVERLAY**: Saves changes on overlay
 - **tool_UNINSTALL_ETK**: Removes es-theme-knulli if it was installed in userspace by the user
