@@ -2,7 +2,7 @@ import os
 import pygame
 import re  
 
-scriptVersion = "1.0.0"
+scriptVersion = "1.0.1"
 scriptName = "M3U_PSX_DIR"
 
 pygame.init()
@@ -58,17 +58,22 @@ def organize_and_create_m3u():
         if len(file_list) < 2:
             continue
 
-        # Oyunun kendi klasörünü oluştur
         target_folder = os.path.join(psx_dir, os.path.basename(game_folder))
         if not os.path.exists(target_folder):
             os.makedirs(target_folder)
 
-        # Dosyaları oyun klasörüne taşı
         for file_path in file_list:
             new_path = os.path.join(target_folder, os.path.basename(file_path))
             if not os.path.exists(new_path):
                 os.rename(file_path, new_path)
                 moved_any_files = True
+                
+                if file_path.lower().endswith(".cue"):
+                    bin_file = os.path.splitext(file_path)[0] + ".bin"
+                    if os.path.exists(bin_file):
+                        new_bin_path = os.path.join(target_folder, os.path.basename(bin_file))
+                        if not os.path.exists(new_bin_path):
+                            os.rename(bin_file, new_bin_path)
 
     if moved_any_files:
         show_message("Multi-disc games moved into their own folders!")
