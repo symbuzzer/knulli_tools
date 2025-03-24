@@ -1,0 +1,113 @@
+import os
+import pygame
+import re  
+
+scriptVersion = "1.0.0"
+scriptName = "M3U_PSX_DIR"
+
+pygame.init()
+
+font = pygame.font.Font(None, 36)
+message_font = pygame.font.Font(None, 36)
+screen = pygame.display.set_mode((640, 480))
+
+def show_message(message):
+    print(message)
+    screen.fill((0, 0, 0))
+    text_surface = message_font.render(message, True, (255, 255, 255))
+    text_rect = text_surface.get_rect(center=(screen.get_width() // 2, screen.get_height() // 2))
+    screen.blit(text_surface, text_rect.topleft)
+    pygame.display.flip()
+    pygame.time.wait(2000)
+
+DISK_REGEX = re.compile(r"(\s*\([Dd]isc\s*\d+\)|\s*\[disc\s*\d+\]|\s*\([Dd]isk\s*\d+\))")
+
+EXCLUDED_FOLDERS = ["images", "manuals", "videos"]
+
+def organize_and_create_m3u():
+    pygame_dir = os.path.dirname(os.path.abspath(__file__))
+    base_dir = os.path.dirname(pygame_dir)
+    psx_dir = os.path.join(base_dir, "psx")
+    
+    if not os.path.exists(psx_dir):
+        show_message(f"PSX directory not found at: {psx_dir}")
+        return
+
+    grouped_files = {}
+
+    for root, dirs, files in os.walk(psx_dir):
+        relative_root = os.path.relpath(root, psx_dir)
+        if any(excluded in relative_root.split(os.sep) for excluded in EXCLUDED_FOLDERS):
+            continue
+
+        for file in files:
+            if file.lower().endswith((".cue", ".img", ".iso", ".chd")):
+                file_path = os.path.join(root, file)
+                base_name = DISK_REGEX.sub("", file).strip()
+                base_name = os.path.splitext(base_name)[0]
+                
+                game_folder = os.path.join(psx_dir, base_name) if relative_root == "." else root
+                
+                if game_folder not in grouped_files:
+                    grouped_files[game_folder] = []
+                grouped_files[game_folder].append(file_path)
+
+    moved_any_files = False
+
+    for game_folder, file_list in grouped_files.items():
+        if len(file_list) < 2:
+            continue
+
+        # Oyunun kendi klasörünü oluştur
+        target_folder = os.path.join(psx_dir, os.path.basename(game_folder))
+        if not os.path.exists(target_folder):
+            os.makedirs(target_folder)
+
+        # Dosyaları oyun klasörüne taşı
+        for file_path in file_list:
+            new_path = os.path.join(target_folder, os.path.basename(file_path))
+            if not os.path.exists(new_path):
+                os.rename(file_path, new_path)
+                moved_any_files = True
+
+    if moved_any_files:
+        show_message("Multi-disc games moved into their own folders!")
+    else:
+        show_message("No new multi-disc games to move!")
+
+    create_M3U(psx_dir, grouped_files)
+
+def create_M3U(psx_dir, grouped_files):
+    created_any_m3u = False
+    
+    for game_folder, file_list in grouped_files.items():
+        if len(file_list) < 2:
+            continue
+
+        m3u_name = os.path.basename(game_folder) + ".m3u"
+        m3u_path = os.path.join(psx_dir, m3u_name)
+        if os.path.exists(m3u_path):
+            show_message(f"{m3u_name} already exists!")
+            continue
+
+        with open(m3u_path, "w") as m3u_file:
+            for file in sorted(file_list):
+                relative_path = os.path.join(os.path.basename(game_folder), os.path.basename(file))
+                m3u_file.write(relative_path + "\n")
+
+        show_message(f"{m3u_name} created!")
+        created_any_m3u = True
+
+    if created_any_m3u:
+        show_message("Refresh gamelists to see added games")
+    else:
+        show_message("No new multi-disc games found!")
+
+def main():
+    organize_and_create_m3u()
+    show_message("Exiting...")
+    pygame.quit()
+
+if __name__ == "__main__":
+    show_message(f"Starting {scriptName} v{scriptVersion} by Ali BEYAZ...")
+    main()
