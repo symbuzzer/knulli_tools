@@ -21,7 +21,7 @@ def show_message(message):
 def save_overlay():
     show_message("Rebooting...")
     try:
-        result = subprocess.run(['batocera-es-swissknife', '--remount'], check=True)
+        result = subprocess.run(['batocera-es-swissknife', '--reboot'], check=True)
         if result == 0:
             show_message("Succesfully rebooted!")
         else:
