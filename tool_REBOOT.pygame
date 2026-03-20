@@ -19,13 +19,13 @@ def show_message(message):
     pygame.time.wait(2000)
 
 def save_overlay():
-    show_message("Saving overlay...")
+    show_message("Rebooting...")
     try:
         result = os.system("sh /usr/bin/knulli-es-swissknife --reboot")
         if result == 0:
-            show_message("Overlay saved succesfully!")
+            show_message("Succesfully rebooted!")
         else:
-            show_message("Error: Overlay not saved!")
+            show_message("Error!")
     except Exception as e:
         show_message(f"Error: {str(e)}")
 
