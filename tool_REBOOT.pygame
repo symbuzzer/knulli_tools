@@ -1,7 +1,8 @@
 import os
 import pygame
+import subprocess
 
-scriptVersion = "1.0.2"
+scriptVersion = "1.0.3"
 scriptName = "REBOOT"
 
 pygame.init()
@@ -19,7 +20,7 @@ def show_message(message):
     pygame.time.wait(2000)
 
 def save_overlay():
-    show_message("Rebooting...")
+    reboot"Rebooting...")
     try:
         result = subprocess.run(['knulli-es-swissknife', '--reboot'], check=True)
         if result == 0:
@@ -30,7 +31,7 @@ def save_overlay():
         show_message(f"Error: {str(e)}")
 
 def main():
-    save_overlay()
+    reboot()
     pygame.quit()
 
 if __name__ == "__main__":
