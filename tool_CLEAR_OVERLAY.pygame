@@ -3,7 +3,7 @@ import pygame
 import shutil
 import subprocess
 
-scriptVersion = "1.1.0"
+scriptVersion = "1.2.0"
 scriptName = "CLEAR_OVERLAY"
 
 overlay_path = "/boot/boot/overlay"
@@ -28,7 +28,7 @@ def clear_overlay():
         return
     
     show_message("Clearing overlay...")
-    subprocess.run(['bash', '-c', '[[ ! -w /boot/boot/autoresize ]] && batocera-es-swissknife --remount'])
+    subprocess.run(['bash', '-c', '[[ ! -w /boot/boot/autoresize ]] && knulli-es-swissknife --remount'])
     os.remove(overlay_path)
     subprocess.run(['knulli-es-swissknife', '--remount'], check=True)
     show_message("Overlay cleared successfully!")
