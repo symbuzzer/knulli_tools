@@ -2,7 +2,7 @@ import os
 import pygame
 import subprocess
 
-scriptVersion = "1.0.1"
+scriptVersion = "1.1.0"
 scriptName = "RW_BOOT"
 
 file_path = "/boot/boot/autoresize"
@@ -23,7 +23,7 @@ def show_message(message):
 
 def makerw_boot():
     show_message("Checking BOOT status...")
-    subprocess.run(['batocera-es-swissknife', '--remount'], check=True)
+    subprocess.run(['knulli-es-swissknife', '--remount'], check=True)
     if os.access(file_path, os.W_OK):
         show_message("BOOT remounted RW")
     else:
