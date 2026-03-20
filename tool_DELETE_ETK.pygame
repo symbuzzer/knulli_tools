@@ -2,7 +2,7 @@ import os
 import pygame
 import shutil
 
-scriptVersion = "1.0.1"
+scriptVersion = "1.1.0"
 scriptName = "DELETE_ETK"
 
 theme_path = "/usr/share/emulationstation/themes/es-theme-knulli"
@@ -33,7 +33,7 @@ def delete_etk():
 def save_overlay():
     show_message("Saving overlay...")
     try:
-        result = os.system("sh /usr/bin/batocera-save-overlay")
+        result = os.system("sh /usr/bin/knulli-save-overlay")
         if result == 0:
             show_message("Overlay saved succesfully!")
         else:
