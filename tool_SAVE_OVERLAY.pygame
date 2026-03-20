@@ -1,7 +1,7 @@
 import os
 import pygame
 
-scriptVersion = "1.0.0"
+scriptVersion = "1.1.0"
 scriptName = "SAVE_OVERLAY"
 
 pygame.init()
@@ -21,7 +21,7 @@ def show_message(message):
 def save_overlay():
     show_message("Saving overlay...")
     try:
-        result = os.system("sh /usr/bin/batocera-save-overlay")
+        result = os.system("sh /usr/bin/knulli-save-overlay")
         if result == 0:
             show_message("Overlay saved succesfully!")
         else:
