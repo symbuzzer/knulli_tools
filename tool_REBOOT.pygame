@@ -1,7 +1,7 @@
 import os
 import pygame
 
-scriptVersion = "1.0.0"
+scriptVersion = "1.0.1"
 scriptName = "REBOOT"
 
 pygame.init()
@@ -21,7 +21,7 @@ def show_message(message):
 def save_overlay():
     show_message("Rebooting...")
     try:
-        result = os.system("sh /usr/bin/knulli-es-swissknife --reboot")
+        result = os.system("knulli-es-swissknife --reboot")
         if result == 0:
             show_message("Succesfully rebooted!")
         else:
